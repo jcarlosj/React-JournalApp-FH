@@ -12,25 +12,28 @@ import { RegisterPage } from '../components/auth/RegisterPage';
 
 export const AuthRouter = () => {
     return (
-        <div>
+        <div className="auth__main">
 
-            {/* A <Switch> looks through its children <Route>s and
-                renders the first one that matches the current URL. */}
-            <Switch>
+            <div className="auth__container">
 
-                <Route 
-                    exact
-                    path='/auth/login'
-                    component={ LoginPage }
-                />
-                <Route 
-                    exact
-                    path='/auth/register'
-                    component={ RegisterPage }
-                />
-                <Redirect to='/auth/register' />
-                
-            </Switch>
+                {/* A <Switch> looks through its children <Route>s and
+                    renders the first one that matches the current URL. */}
+                <Switch>
+
+                    <Route 
+                        exact
+                        path='/auth/login'
+                        component={ LoginPage }
+                    />
+                    <Route 
+                        exact
+                        path='/auth/register'
+                        component={ RegisterPage }
+                    />
+                    <Redirect to='/auth/register' />
+                    
+                </Switch>
+            </div>
         </div>
     )
 }
