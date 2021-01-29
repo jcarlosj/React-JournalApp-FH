@@ -27,6 +27,9 @@ $unit: 'px'; // Feel free to change the unit.
     .mb-#{ $i } {
         margin-bottom: #{ $value + $unit };
     }
+    .mtb-#{ $i } {
+        margin: #{ $value + $unit } 0;
+    }
 }
 
 .pointer {
