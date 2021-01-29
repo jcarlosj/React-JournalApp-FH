@@ -1,5 +1,8 @@
 import React from 'react';
 
+/** Components */
+import { JournalEntries } from './JournalEntries';
+
 export const Sidebar = () => {
     return (
         <aside className="journal__sidebar">
@@ -23,6 +26,8 @@ export const Sidebar = () => {
                     className="mt-4"
                 >New entry</p>
             </div>
+
+            <JournalEntries />
 
         </aside>
     )
