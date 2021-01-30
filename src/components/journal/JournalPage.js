@@ -2,6 +2,7 @@ import React from 'react';
 
 /** Components */
 import { Sidebar } from './Sidebar';
+import { NothingSelected } from './NothingSelected';
 
 export const JournalPage = () => {
     return (
@@ -10,7 +11,7 @@ export const JournalPage = () => {
             <Sidebar />
 
             <main>
-                <h1 className="mt-4">Journal Page</h1>
+                <NothingSelected />
             </main>
             
         </div>
