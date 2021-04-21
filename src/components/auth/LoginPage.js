@@ -1,25 +1,49 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/** Hooks */
+import { useForm } from '../../hooks/useForms';
+
+/** Page Component */
 export const LoginPage = () => {
+
+    const /** Implementación de Hook Personalizado */
+        [ formValues, handleInputChange ] = useForm({
+            email: '',
+            password: ''
+        }),
+        /** Destructuracion de datos del Formulario */
+        { email, password } = formValues;
+
+    const handleLogin = ( event ) => {
+        event.preventDefault();
+        console.log( email, password );
+    }
+
     return (
         <>
             <h1 className="auth__title">Login Page</h1>
-            <form>
+            <form
+                onSubmit={ handleLogin }
+            >
                 <input
                     type="text"
                     placeholder="Email"
                     name="email"
                     className="auth__input"
+                    value={ email }
+                    onChange={ handleInputChange }
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     name="password"
                     className="auth__input"
+                    value={ password }
+                    onChange={ handleInputChange }
                 />
                 <button
-                    type="button"
+                    type="submit"
                     className="btn btn-primary btn-block"
                     //disabled={ true }
                 >
