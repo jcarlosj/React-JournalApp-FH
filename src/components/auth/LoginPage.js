@@ -1,13 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 /** Hooks */
 import { useForm } from '../../hooks/useForms';
 
+/** Actions */
+import { login } from '../../actions/auth';
+
 /** Page Component */
 export const LoginPage = () => {
 
-    const /** Implementación de Hook Personalizado */
+    const
+        /** Despachador de Acciones de Redux */
+        dispatch = useDispatch(), 
+        /** Implementación de Hook Personalizado */
         [ formValues, handleInputChange ] = useForm({
             email: '',
             password: ''
@@ -17,7 +24,7 @@ export const LoginPage = () => {
 
     const handleLogin = ( event ) => {
         event.preventDefault();
-        console.log( email, password );
+        dispatch( login( email, password ) );   /** El despachador requiere la accion */
     }
 
     return (
