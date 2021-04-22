@@ -1,5 +1,8 @@
 import { types } from '../types/types';
 
+/** Configuracion de Firebase */
+import { firebase, googleAuthProvider } from '../firebase/config';
+
 /** Accion Asincrona */
 export const startLoginEmailPassword = ( email, password ) => {
 
@@ -11,6 +14,21 @@ export const startLoginEmailPassword = ( email, password ) => {
         setTimeout( () => {
             dispatch( login( 123, 'Sofia' ) );
         }, 3000 );
+
+    }
+}
+
+/** Accion Asincrona: Login usando cuenta de Google */
+export const startGoogleLogin = () => {
+
+    // Retornara un CallBack
+    return ( dispath ) => {
+
+        firebase .auth() .signInWithPopup( googleAuthProvider )     //  Retorna una Promesa
+            .then( ({ user }) => {                                  //  userCredential: Destructurando data recibida
+                //  console .log( userCredential );
+                dispath( login( user .uid, user .displayName ) );
+            });
 
     }
 }
