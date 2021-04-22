@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks/useForms';
 
 /** Actions */
-import { login } from '../../actions/auth';
+import { startLoginEmailPassword } from '../../actions/auth';
 
 /** Page Component */
 export const LoginPage = () => {
@@ -24,7 +24,7 @@ export const LoginPage = () => {
 
     const handleLogin = ( event ) => {
         event.preventDefault();
-        dispatch( login( email, password ) );   /** El despachador requiere la accion */
+        dispatch( startLoginEmailPassword( email, password ) );   /** El despachador requiere la accion asincrona */
     }
 
     return (
