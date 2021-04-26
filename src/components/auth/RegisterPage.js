@@ -17,8 +17,8 @@ export const RegisterPage = () => {
     const
         /** Despachador de Acciones de Redux */
         dispatch = useDispatch(), 
-        /** Obtener el state del Reducer (uiReducer) */
-        state = useSelector( state => state ),
+        /** Obtener el state del Reducer (uiReducer) Destructurando solo el dato requerido */
+        { errorMessage } = useSelector( state => state .ui ),
         /** Implementación de Hook Personalizado */
         [ formValues, handleInputChange ] = useForm({
             name: '',
@@ -29,7 +29,7 @@ export const RegisterPage = () => {
         /** Destructuracion de datos del Formulario */
         { name, email, password, confirm_password } = formValues;
 
-    console .log( state );
+    //console .log( errorMessage );
 
     const handleRegister = ( event ) => {
         event.preventDefault();
@@ -69,9 +69,12 @@ export const RegisterPage = () => {
             <form
                 onSubmit={ handleRegister }
             >
-                <div className="auth__alert-error">
-
-                </div>
+                {
+                    errorMessage &&
+                        <div className="auth__alert-error">
+                            { errorMessage }
+                        </div>
+                }
 
                 <input
                     type="text"
