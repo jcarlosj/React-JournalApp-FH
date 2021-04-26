@@ -7,6 +7,7 @@ import { useForm } from '../../hooks/useForms';
 
 /** Actions */
 import { setError, removeError } from '../../actions/ui';
+import { startRegisterNameEmailPassword } from '../../actions/auth';
 
 /** Dependencies */
 import validator from 'validator';
@@ -36,8 +37,9 @@ export const RegisterPage = () => {
         console.log( name, email, password, confirm_password );
 
         if( isFormValid() ) {
-            console .log( 'The form is valid :)' );
+            dispatch( startRegisterNameEmailPassword( name, email, password ) );
         }
+
     }
 
     const isFormValid = () => {

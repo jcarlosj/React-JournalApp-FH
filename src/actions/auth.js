@@ -18,6 +18,25 @@ export const startLoginEmailPassword = ( email, password ) => {
     }
 }
 
+/** Accion Asincrona */
+export const startRegisterNameEmailPassword = ( name, email, password ) => {
+    return ( dispatch ) => {
+
+        firebase .auth() .createUserWithEmailAndPassword( email, password )     //  Retorna una Promesa (Crea y loguea directamente en Firebase)
+            .then( async ({ user }) => {                                        //  userCredential: Destructurando data recibida
+
+                await user .updateProfile({
+                    displayName: name
+                });
+
+                // console .log( user );
+                dispatch( login( user .uid, user .displayName ) );
+            })
+            .catch( error => console.log( error ) );
+
+    }
+}
+
 /** Accion Asincrona: Login usando cuenta de Google */
 export const startGoogleLogin = () => {
 
