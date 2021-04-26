@@ -1,17 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/** Hooks */
+import { useForm } from '../../hooks/useForms';
+
+/** Page Component */
 export const RegisterPage = () => {
+
+    const
+        /** Implementación de Hook Personalizado */
+        [ formValues, handleInputChange ] = useForm({
+            name: '',
+            email: '',
+            password: '',
+            confirm_password: ''
+        }),
+        /** Destructuracion de datos del Formulario */
+        { name, email, password, confirm_password } = formValues;
+
+    const handleRegister = ( event ) => {
+        event.preventDefault();
+        console.log( name, email, password, confirm_password );
+    }
+
     return (
         <>
             <h1 className="auth__title">Register Page</h1>
-            <form>
+            <form
+                onSubmit={ handleRegister }
+            >
                 <input
                     type="text"
                     placeholder="Name"
                     name="name"
                     className="auth__input"
                     autoComplete="off"
+                    value={ name }
+                    onChange={ handleInputChange }
                 />
                 <input
                     type="text"
@@ -19,21 +44,29 @@ export const RegisterPage = () => {
                     name="email"
                     className="auth__input"
                     autoComplete="off"
+                    value={ email }
+                    onChange={ handleInputChange }
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     name="password"
                     className="auth__input"
+                    autoComplete="off"
+                    value={ password }
+                    onChange={ handleInputChange }
                 />
                 <input
                     type="password"
                     placeholder="Confirm password"
                     name="confirm_password"
                     className="auth__input"
+                    autoComplete="off"
+                    value={ confirm_password }
+                    onChange={ handleInputChange }
                 />
                 <button
-                    type="button"
+                    type="submit"
                     className="btn btn-primary btn-block mtb-3"
                     //disabled={ true }
                 >
