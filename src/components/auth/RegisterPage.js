@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 /** Hooks */
 import { useForm } from '../../hooks/useForms';
+
+/** Actions */
+import { setError, removeError } from '../../actions/ui';
 
 /** Dependencies */
 import validator from 'validator';
@@ -11,6 +15,10 @@ import validator from 'validator';
 export const RegisterPage = () => {
 
     const
+        /** Despachador de Acciones de Redux */
+        dispatch = useDispatch(), 
+        /** Obtener el state del Reducer (uiReducer) */
+        state = useSelector( state => state ),
         /** Implementación de Hook Personalizado */
         [ formValues, handleInputChange ] = useForm({
             name: '',
@@ -20,6 +28,8 @@ export const RegisterPage = () => {
         }),
         /** Destructuracion de datos del Formulario */
         { name, email, password, confirm_password } = formValues;
+
+    console .log( state );
 
     const handleRegister = ( event ) => {
         event.preventDefault();
@@ -33,17 +43,22 @@ export const RegisterPage = () => {
     const isFormValid = () => {
 
         if( name .trim() .length === 0 ) {
-            console .log( 'Name is required!' );
+            dispatch( setError( 'Name is required!' ) );
+
             return false;
         }
         else if( ! validator .isEmail( email ) ) {
-            console .log( 'Email is not valid!' );
+            dispatch( setError( 'Email is not valid!' ) );
+            
             return false;
         }
         else if( password !== confirm_password || password <= 5 ) {
-            console .log( 'Password should be at least 6 characters and match each other' );
+            dispatch( setError( 'Password should be at least 6 characters and match each other' ) );
+            
             return false;
         }
+
+        dispatch( removeError() );
 
         return true;
     }
