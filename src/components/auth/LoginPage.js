@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 /** Hooks */
 import { useForm } from '../../hooks/useForms';
 
 /** Actions */
+import { setError, removeError } from '../../actions/ui';
 import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth';
+
+/** Dependencies */
+import validator from 'validator';
 
 /** Page Component */
 export const LoginPage = () => {
@@ -14,6 +18,8 @@ export const LoginPage = () => {
     const
         /** Despachador de Acciones de Redux */
         dispatch = useDispatch(), 
+        /** Obtener el state del Reducer (uiReducer) Destructurando solo el dato requerido */
+        { errorMessage } = useSelector( state => state .ui ),
         /** Implementación de Hook Personalizado */
         [ formValues, handleInputChange ] = useForm({
             email: '',
@@ -21,10 +27,34 @@ export const LoginPage = () => {
         }),
         /** Destructuracion de datos del Formulario */
         { email, password } = formValues;
+    
+    //console .log( errorMessage );
 
     const handleLogin = ( event ) => {
         event.preventDefault();
-        dispatch( startLoginEmailPassword( email, password ) );   /** El despachador requiere la accion asincrona */
+        console.log( email, password );
+
+        if( isFormValid() ) {
+            dispatch( startLoginEmailPassword( email, password ) );   /** El despachador requiere la accion asincrona */
+        }
+    }
+
+    const isFormValid = () => {
+
+        if( ! validator .isEmail( email ) ) {
+            dispatch( setError( 'Email is not valid!' ) );
+            
+            return false;
+        }
+        else if( password <= 5 ) {
+            dispatch( setError( 'Password should be at least 6 characters and match each other' ) );
+            
+            return false;
+        }
+
+        dispatch( removeError() );
+
+        return true;
     }
 
     const handleGoogleLogin = () => {
@@ -37,6 +67,13 @@ export const LoginPage = () => {
             <form
                 onSubmit={ handleLogin }
             >
+                {
+                    errorMessage &&
+                        <div className="auth__alert-error">
+                            { errorMessage }
+                        </div>
+                }
+
                 <input
                     type="text"
                     placeholder="Email"
