@@ -19,7 +19,7 @@ export const RegisterPage = () => {
         /** Despachador de Acciones de Redux */
         dispatch = useDispatch(), 
         /** Obtener el state del Reducer (uiReducer) Destructurando solo el dato requerido */
-        { errorMessage } = useSelector( state => state .ui ),
+        { errorMessage, loading } = useSelector( state => state .ui ),
         /** Implementación de Hook Personalizado */
         [ formValues, handleInputChange ] = useForm({
             name: '',
@@ -117,7 +117,7 @@ export const RegisterPage = () => {
                 <button
                     type="submit"
                     className="btn btn-primary btn-block mtb-3"
-                    //disabled={ true }
+                    disabled={ loading }
                 >
                     Register
                 </button>

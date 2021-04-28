@@ -32,6 +32,8 @@ export const startLoginEmailPassword = ( email, password ) => {
 export const startRegisterNameEmailPassword = ( name, email, password ) => {
     return ( dispatch ) => {
 
+        dispatch( startLoading() );
+
         firebase .auth() .createUserWithEmailAndPassword( email, password )     //  Retorna una Promesa (Crea y loguea directamente en Firebase)
             .then( async ({ user }) => {                                        //  userCredential: Destructurando data recibida
 
@@ -41,8 +43,12 @@ export const startRegisterNameEmailPassword = ( name, email, password ) => {
 
                 // console .log( user );
                 dispatch( login( user .uid, user .displayName ) );
+                dispatch( finishLoading() );
             })
-            .catch( error => console.log( error ) );
+            .catch( error => {
+                console.log( error );
+                dispatch( finishLoading() );
+            } );
 
     }
 }
