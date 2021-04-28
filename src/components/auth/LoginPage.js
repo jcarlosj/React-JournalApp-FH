@@ -19,7 +19,7 @@ export const LoginPage = () => {
         /** Despachador de Acciones de Redux */
         dispatch = useDispatch(), 
         /** Obtener el state del Reducer (uiReducer) Destructurando solo el dato requerido */
-        { errorMessage } = useSelector( state => state .ui ),
+        { errorMessage, loading } = useSelector( state => state .ui ),
         /** Implementación de Hook Personalizado */
         [ formValues, handleInputChange ] = useForm({
             email: '',
@@ -93,7 +93,7 @@ export const LoginPage = () => {
                 <button
                     type="submit"
                     className="btn btn-primary btn-block"
-                    //disabled={ true }
+                    disabled={ loading }
                 >
                     Login
                 </button>

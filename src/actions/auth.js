@@ -3,20 +3,27 @@ import { types } from '../types/types';
 /** Configuracion de Firebase */
 import { firebase, googleAuthProvider } from '../firebase/config';
 
+/** Acciones de UI */
+import { finishLoading, startLoading } from './ui';
+
 /** Accion Asincrona */
 export const startLoginEmailPassword = ( email, password ) => {
 
     // Retornara un CallBack
     return ( dispatch ) => {    /** Redux-Thunk: Permite que podamos traer el dispatch como un parametro */
 
-        // Aqui podriamos usar dispatch todas las veces que se requiera
+        dispatch( startLoading() );
 
         firebase .auth() .signInWithEmailAndPassword( email, password )         //  Retorna una Promesa
             .then( ({ user }) => {                                  //  userCredential: Destructurando data recibida
                 // console .log( userCred );
                 dispatch( login( user .uid, user .displayName ) );
+                dispatch( finishLoading() );
             })
-            .catch( error => console.log( error ) );
+            .catch( error => {
+                console.log( error );
+                dispatch( finishLoading() );
+            } );
 
     }
 }
