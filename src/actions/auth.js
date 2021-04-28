@@ -11,9 +11,12 @@ export const startLoginEmailPassword = ( email, password ) => {
 
         // Aqui podriamos usar dispatch todas las veces que se requiera
 
-        setTimeout( () => {
-            dispatch( login( 123, 'Sofia' ) );
-        }, 3000 );
+        firebase .auth() .signInWithEmailAndPassword( email, password )         //  Retorna una Promesa
+            .then( ({ user }) => {                                  //  userCredential: Destructurando data recibida
+                // console .log( userCred );
+                dispatch( login( user .uid, user .displayName ) );
+            })
+            .catch( error => console.log( error ) );
 
     }
 }
