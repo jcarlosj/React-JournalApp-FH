@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     Redirect,
@@ -22,7 +22,10 @@ import { login } from '../actions/auth';
 /** Component */
 export const AppRouter = () => {
 
-    const dispatch = useDispatch();   /** Despachador de Acciones de Redux */
+    const 
+        dispatch = useDispatch(),                                       /** Despachador de Acciones de Redux */
+        [ isCheckingAuth, setIsCheckingAuth ] = useState( true ),       /** Estado para comprobar autenticacion de un usuario en Firebase */
+        [ isLoggedIn, setIsLoggedIn ] = useState( false );              /** Estado para determinar si hay un usuario loqueado */
 
     useEffect( () => {
         //  Crea & retorna un Observable (objeto de tipo especial que se puede disparar mas de una vez ante los cambios en el mismo)
@@ -31,10 +34,24 @@ export const AppRouter = () => {
             if( user ?.uid ) {
                 console .log( user );
                 dispatch( login( user .uid, user .displayName ) );
+                setIsLoggedIn( true );
             }
+            else {
+                setIsLoggedIn( false );
+            }
+
+            setIsCheckingAuth( false );                                 /** Finaliza comprobacion de autenticacion de usuario en Firebase */
             
         });     
-    }, [ dispatch ] );     //  [] => Solo se ejecutara una vez
+    }, [ dispatch, setIsLoggedIn, setIsCheckingAuth ] );     //  [] => Solo se ejecutara una vez
+
+    /** Valida si ha finalizado la comprobacion de autenticacion (Se puede implementar Redux a cambio de un State de Componente) */
+    if( isCheckingAuth ) {
+        return (
+            <h2>Wait...</h2>    // Esto podria desplegarse como un componente nuevo
+        );
+    }
+
 
     return (
         <Router>
