@@ -6,6 +6,9 @@ import { firebase, googleAuthProvider } from '../firebase/config';
 /** Acciones de UI */
 import { finishLoading, startLoading } from './ui';
 
+/** Dependencias */
+import Swal from 'sweetalert2';
+
 /** Accion Asincrona */
 export const startLoginEmailPassword = ( email, password ) => {
 
@@ -23,6 +26,13 @@ export const startLoginEmailPassword = ( email, password ) => {
             .catch( error => {
                 console.log( error );
                 dispatch( finishLoading() );
+
+                Swal .fire(
+                    'Login Failed!',        //  Titulo
+                    error .message,         //  HTML
+                    'error'                 //  Icono
+                );
+
             } );
 
     }
@@ -48,6 +58,13 @@ export const startRegisterNameEmailPassword = ( name, email, password ) => {
             .catch( error => {
                 console.log( error );
                 dispatch( finishLoading() );
+
+                Swal .fire(
+                    'Login Failed!',        //  Titulo
+                    error .message,         //  HTML
+                    'error'                 //  Icono
+                );
+
             } );
 
     }
