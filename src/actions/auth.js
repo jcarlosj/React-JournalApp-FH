@@ -78,3 +78,19 @@ export const login = ( uid, displayName ) => {
         }
     }
 }
+
+/** Accion Asincrona: Logout */
+export const startLogout = () => {
+    return async ( dispatch ) => {
+
+        await firebase .auth() .signOut();      //  Retorna una Promesa. Generalmente no falla, por lo que no validaremos (con then/catch o el resultado de await)
+
+        dispatch( logout() );
+
+    }
+}
+
+/** Acción sincrona: Logout */
+export const logout = () => ({      //  Return Implicito
+    type: types .logout
+});
