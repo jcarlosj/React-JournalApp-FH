@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import {
     Redirect,
     BrowserRouter as Router,
-    Route,
     Switch
 } from 'react-router-dom';
 
@@ -12,6 +11,8 @@ import { AuthRouter } from './AuthRouter';
 
 /** Page Components */
 import { JournalPage } from '../components/journal/JournalPage';
+import { PrivateRoute } from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 
 /** Configuracion de Firebase */
 import { firebase } from '../firebase/config';
@@ -52,7 +53,6 @@ export const AppRouter = () => {
         );
     }
 
-
     return (
         <Router>
             <div>
@@ -61,16 +61,19 @@ export const AppRouter = () => {
                     renders the first one that matches the current URL. */}
                 <Switch>
                 
-                    <Route 
-                        path='/auth'
-                        component={ AuthRouter }
+                    <PublicRoute 
+                        isAuthenticated={ isLoggedIn }  //  Autenticacion (true/false): Propiedad definida esperada
+                        component={ AuthRouter }        //  Router: Propiedad definida esperada
+                        path="/auth"                    //  Ruta para la que se define el acceso privado (Esto afectara a todas las rutas hijas del Router)
                     />
-                    <Route 
-                        exact
-                        path='/'
-                        component={ JournalPage }
+                    <PrivateRoute 
+                        isAuthenticated={ isLoggedIn }  //  Autenticacion (true/false): Propiedad definida esperada
+                        component={ JournalPage }       //  Router: Propiedad definida esperada
+                        exact path="/"                  //  Ruta para la que se define el acceso privado (Esto afectara a todas las rutas hijas del Router)
                     />
+
                     <Redirect to='/auth/login' />
+
                 </Switch>
             </div>
         </Router>

@@ -9,7 +9,7 @@ import {
 import { LoginPage } from '../components/auth/LoginPage';
 import { RegisterPage } from '../components/auth/RegisterPage';
 
-
+/** Componente de Rutas de Autenticacion */
 export const AuthRouter = () => {
     return (
         <div className="auth__main">
