@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 /** Acciones */
 import { startLogout } from '../../actions/auth';
@@ -9,7 +9,9 @@ import { JournalEntries } from './JournalEntries';
 
 export const Sidebar = () => {
 
-    const dispatch = useDispatch();     /** Despachador de Acciones de Redux */
+    const 
+        dispatch = useDispatch(),                           /** Despachador de Acciones de Redux */
+        { name } = useSelector( state => state .auth );     /** Obtener el state del Reducer (authReducer) Destructurando solo el dato requerido */
 
     const handleLogout = () => {
         dispatch( startLogout() );
@@ -21,7 +23,7 @@ export const Sidebar = () => {
             <div className="journal__sidebar-navbar">
                 <h3 className="mt-4"> 
                     <i className="far fa-moon"></i>
-                    <span> Eva Sofía</span>
+                    <span> { name }</span>
                 </h3>
 
                 <button 
