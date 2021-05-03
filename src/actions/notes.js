@@ -23,5 +23,17 @@ export const startAddNewNote = () => {
 
         console .log( documentReference );
 
+        /** */
+        dispatch( activeNote( documentReference .id, newNote ) );
+
     }
 }
+
+/** Accoin Sincrona:  */
+export const activeNote = ( id, note ) => ({
+   type: types .notesActive,
+   payload: {
+       id,
+       ...note
+   } 
+});
